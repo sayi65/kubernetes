@@ -43,12 +43,12 @@ spec:
       containers:
       - name: prometheus
         image: prom/prometheus:v2.10.0
-        args: [ "--storage.tsdb.path=/mnt/", "--config.file=/mnt/etc/prometheus.yml", "--storage.tsdb.no-lockfile" ]
+        args: [ "--storage.tsdb.path=/mnt/prometheus/", "--config.file=/mnt/prometheus/etc/prometheus.yml", "--storage.tsdb.no-lockfile" ]
         ports:
         - containerPort: 9090
         volumeMounts:
         - name: config
-          mountPath: /mnt/etc/
+          mountPath: /mnt/prometheus/etc/
         - name: data-volume
           mountPath: /mnt/
       securityContext:
