@@ -1,22 +1,22 @@
 apiVersion: extensions/v1beta1
-kind: DaemonSet
+kind: Deployment
 metadata:
-  name: node-exporter
+  name: kube-state-metrics
 spec:
+  replicas: 1
   template:
     metadata:
       labels:
-        app: node-exporter
+        app: kube-state-metrics
       annotations:
         prometheus.io/scrape: 'true'
-        prometheus.io/port: '9100'
+        prometheus.io/port: '8080'
         prometheus.io/path: /metrics
     spec:
       containers:
-      - name: node-exporter
-        image: prom/node-exporter:latest
-        imagePullPolicy: Always
+      - name: kube-state-metrics
+        image: gcr.io/google_containers/kube-state-metrics:v1.6.0
         ports:
-        - containerPort: 9100
+        - containerPort: 8080
       hostNetwork: true
       hostPID: true
