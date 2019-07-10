@@ -6,7 +6,7 @@ metadata:
     app: cassandra
 spec:
   serviceName: cassandra
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: cassandra
@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 1800
       containers:
       - name: cassandra
-        image: gcr.io/google-samples/cassandra:v13
+        image: gcr.io/google-samples/cassandra:v11
         imagePullPolicy: Always
         ports:
         - containerPort: 7000
@@ -55,11 +55,13 @@ spec:
           - name: CASSANDRA_SEEDS
             value: "cassandra-0.cassandra.default.svc.cluster.local"
           - name: CASSANDRA_CLUSTER_NAME
-            value: "K8Demo"
+            value: "cassandra"
+          - name: CASSANDRA_PASSWORD
+            value: "cassandra"
           - name: CASSANDRA_DC
-            value: "DC1-K8Demo"
+            value: "cassandra"
           - name: CASSANDRA_RACK
-            value: "Rack1-K8Demo"
+            value: "cassandra"
           - name: POD_IP
             valueFrom:
               fieldRef:
@@ -72,9 +74,6 @@ spec:
             - /ready-probe.sh
           initialDelaySeconds: 15
           timeoutSeconds: 5
-        # These volume mounts are persistent. They are like inline claims,
-        # but not exactly because the names need to match exactly one of
-        # the stateful pod volumes.
         volumeMounts:
         - name: cassandra-home
           mountPath: /cassandra_data

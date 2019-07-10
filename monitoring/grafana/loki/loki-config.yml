@@ -22,14 +22,22 @@ data:
     schema_config:
       configs:
       - from: 2018-04-15
-        store: boltdb
+        store: cassandra
         object_store: filesystem
         schema: v9
         index:
           prefix: index_
-          period: 168h
+          period: 360h
 
     storage_config:
+      cassandra:
+        username: cassandra
+        password: cassandra
+        addresses: cassandra
+        auth: true
+        host-verification: false
+        keyspace: cassandra
+
       boltdb:
         directory: /efs/loki/index
 

@@ -16,16 +16,21 @@ ingester:
 schema_config:
   configs:
   - from: 2018-04-15
-    store: boltdb
+    store: cassandra
     object_store: filesystem
     schema: v9
     index:
-      prefix: index_
-      period: 168h
+      prefix: cassandra_table
+      period: 360h
 
 storage_config:
-  boltdb:
-    directory: /tmp/loki/index
+  cassandra:
+    username: cassandra
+    password: cassandra
+    addresses: cassandra
+    auth: true
+    host-verification: false
+    keyspace: cassandra
 
   filesystem:
     directory: /tmp/loki/chunks
